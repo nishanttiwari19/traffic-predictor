@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Places - Traffic Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .place-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            height: 100%;
+        }
+        .place-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        .place-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            flex: 1;
+        }
+        .place-actions {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .route-btn {
+            background: var(--blue-600);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .route-btn:hover {
+            background: var(--blue-700);
+            color: white;
+            text-decoration: none;
+        }
+        .map-link {
+            font-size: 12px;
+            color: var(--gray-500);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .map-link:hover {
+            color: var(--blue-600);
+        }
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        .page-header p {
+            color: var(--gray-500);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <span class="brand-name">Traffic Predictor</span>
+                <span class="brand-location">Bhopal Region</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+            </button>
+            <nav class="app-nav" id="app-nav">
+                <div class="nav-overlay" id="nav-overlay"></div>
+                <div class="nav-links">
+                    <a href="index.html">Dashboard</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="places.html" class="active">Places</a>
+                    <a href="about.html">About</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="app-main" style="flex-direction: column;">
+            <div class="page-header">
+                <h1>Top Visited Places in Bhopal</h1>
+                <p>Discover the most frequented locations, check their current traffic, or view them on Google Maps.</p>
+            </div>
+
+            <div class="places-grid">
+                <!-- Place 1 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">MP Nagar</div>
+                        <div class="place-desc">Bhopal's major commercial and business hub, featuring numerous corporate offices, coaching centers, and restaurants. Expect high traffic during peak hours.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=MP+Nagar,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'MP Nagar');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 2 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">New Market</div>
+                        <div class="place-desc">One of the oldest and most popular shopping districts in the city. Frequent pedestrian congestion and tight parking conditions.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=New+Market,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'New Market');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 3 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">Habibganj (Rani Kamlapati)</div>
+                        <div class="place-desc">A world-class modern railway station. Traffic flows well around the station but can get busy during major train arrivals.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Rani+Kamlapati+Station,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'Habibganj');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 4 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">Upper Lake (Bada Talab)</div>
+                        <div class="place-desc">A scenic artificial lake and tourist hotspot. The VIP road alongside it generally offers smooth traffic flow with beautiful views.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Upper+Lake,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'Upper Lake Bhopal');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 5 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">DB City Mall</div>
+                        <div class="place-desc">The largest shopping mall in Central India. The main arterial road out front frequently experiences moderate to heavy traffic.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=DB+City+Mall,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'DB City Mall');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Place 6 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">AIIMS Bhopal</div>
+                        <div class="place-desc">A major medical and research institute located in the Saket Nagar area. Roads connecting to AIIMS are well-maintained but busy.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=AIIMS,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'AIIMS Bhopal');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 7 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">Van Vihar National Park</div>
+                        <div class="place-desc">A beautiful open zoological park bordering the Upper Lake. The surrounding roads offer relaxed driving with strict speed limits.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Van+Vihar+National+Park,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'Van Vihar National Park');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 8 -->
+                <div class="panel">
+                    <div class="panel-body place-card">
+                        <div class="place-name">Kolar Road</div>
+                        <div class="place-desc">One of the longest and busiest residential corridors connecting Kolar satellite township to the main city. Heavy peak congestion.</div>
+                        <div class="place-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Kolar+Road,+Bhopal" target="_blank" class="map-link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Google Maps
+                            </a>
+                            <a href="index.html" class="route-btn" onclick="sessionStorage.setItem('prefillDest', 'Kolar Road');">Check Traffic</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Traffic Predictor</h4>
+                    <p>Advanced traffic monitoring and prediction for the Bhopal region.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="about.html">About System</a></li>
+                        <li><a href="places.html">Places</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Traffic Predictor. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Setup mobile menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const appNav = document.getElementById('app-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        if (menuBtn && appNav) {
+            menuBtn.addEventListener('click', () => {
+                appNav.classList.toggle('menu-open');
+            });
+        }
+        if (navOverlay && appNav) {
+            navOverlay.addEventListener('click', () => {
+                appNav.classList.remove('menu-open');
+            });
+        }
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (appNav) appNav.classList.remove('menu-open');
+            });
+        });
+    </script>
+</body>
+</html>

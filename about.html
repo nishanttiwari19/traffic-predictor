@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Traffic Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <span class="brand-name">Traffic Predictor</span>
+                <span class="brand-location">Bhopal Region</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+            </button>
+            <nav class="app-nav" id="app-nav">
+                <div class="nav-overlay" id="nav-overlay"></div>
+                <div class="nav-links">
+                    <a href="index.html">Dashboard</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="places.html">Places</a>
+                    <a href="about.html" class="active">About</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" style="flex-direction: column; max-width: 900px; padding: 2rem 1.5rem;">
+            
+            <!-- Hero Section -->
+            <section class="about-section about-header">
+                <h1>About Traffic Predictor</h1>
+                <h2 class="about-subtitle">Understand traffic. Plan your journey. Travel smarter.</h2>
+                <p class="about-lead">Traffic Predictor is a web-based traffic analysis and prediction application designed to help users understand route conditions, estimate travel delays, and explore traffic patterns across Bhopal.</p>
+                <div class="about-actions">
+                    <a href="index.html" class="btn btn-primary">Explore Dashboard</a>
+                    <a href="analytics.html" class="btn" style="background: white; border: 1px solid var(--gray-300); color: var(--gray-800);">View Live Traffic</a>
+                </div>
+            </section>
+
+            <!-- What is Traffic Predictor? -->
+            <section class="about-section text-block">
+                <h2 class="section-title">What is Traffic Predictor?</h2>
+                <p>Traffic Predictor is designed to combine interactive maps, route information, traffic analysis, historical data and machine-learning-based prediction to help users make better-informed travel decisions.</p>
+                <p>The application allows users to:</p>
+                <ul>
+                    <li>Search for locations</li>
+                    <li>Select a starting point and destination</li>
+                    <li>View routes</li>
+                    <li>Check estimated travel time</li>
+                    <li>Understand traffic conditions</li>
+                    <li>Analyze traffic patterns</li>
+                    <li>View historical trends</li>
+                    <li>Explore predicted traffic conditions</li>
+                </ul>
+            </section>
+
+            <!-- How It Works -->
+            <section class="about-section">
+                <h2 class="section-title">How It Works</h2>
+                <div class="grid-2">
+                    <div class="step-card feature-card">
+                        <span class="step-number">01</span>
+                        <h3>Choose Your Locations</h3>
+                        <p>Select your starting location and destination using the map and location search.</p>
+                    </div>
+                    <div class="step-card feature-card">
+                        <span class="step-number">02</span>
+                        <h3>Analyze Your Route</h3>
+                        <p>The application calculates route information and evaluates available traffic data.</p>
+                    </div>
+                    <div class="step-card feature-card">
+                        <span class="step-number">03</span>
+                        <h3>Understand Traffic</h3>
+                        <p>View traffic level, estimated travel time, delay and route information.</p>
+                    </div>
+                    <div class="step-card feature-card">
+                        <span class="step-number">04</span>
+                        <h3>Predict Traffic</h3>
+                        <p>Historical and available traffic data can be analyzed to estimate future traffic conditions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="about-section">
+                <h2 class="section-title">Key Features</h2>
+                <div class="grid-2">
+                    <div class="feature-card">
+                        <h3>Interactive Google Maps</h3>
+                        <p>Explore Bhopal and select real locations directly on the map.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Location Search</h3>
+                        <p>Search for real places, roads and locations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Route Analysis</h3>
+                        <p>View route distance, estimated travel time and traffic-related information.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Traffic Prediction</h3>
+                        <p>Analyze historical patterns and available data to estimate future traffic conditions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Traffic Analytics</h3>
+                        <p>Explore traffic trends, peak periods and road performance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Historical Trends</h3>
+                        <p>Understand how traffic conditions change across different times and days.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Responsive Design</h3>
+                        <p>Use the application comfortably on desktop, tablet and mobile devices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Real-Time Ready Architecture</h3>
+                        <p>The application is structured so that live traffic and external traffic data sources can be integrated into the backend.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bhopal Coverage -->
+            <section class="about-section text-block">
+                <h2 class="section-title">Built for Bhopal</h2>
+                <p>Traffic Predictor is initially focused on Bhopal, Madhya Pradesh, providing a city-focused environment for exploring locations, routes and traffic patterns.</p>
+                <div id="about-map" class="map-preview-container" style="margin-top: 1.5rem;"></div>
+            </section>
+
+            <!-- Prediction Technology -->
+            <section class="about-section text-block">
+                <h2 class="section-title">How Traffic Prediction Works</h2>
+                <p>The prediction system is designed to analyze historical traffic patterns and relevant traffic-related factors to estimate future traffic conditions.</p>
+                <p>Relevant traffic-related factors used by the implementation:</p>
+                <ul>
+                    <li>Time of day</li>
+                    <li>Day of week</li>
+                    <li>Historical traffic score</li>
+                    <li>Average speed</li>
+                </ul>
+                <div class="disclaimer-box" style="margin-top: 1rem;">
+                    <h4>Note</h4>
+                    <p>Prediction models are currently being developed and evaluated using available historical/demo datasets.</p>
+                </div>
+            </section>
+
+            <!-- Data & Maps -->
+            <section class="about-section text-block">
+                <h2 class="section-title">Data & Maps</h2>
+                <p>Google Maps Platform is used for interactive mapping imagery.</p>
+                <p>OpenStreetMap Nominatim services are used for location search and geocoding.</p>
+                <p>Bhopal Ward boundaries are visualized using a local GeoJSON dataset.</p>
+            </section>
+
+
+            <!-- Built By & Status -->
+            <section class="about-section grid-2">
+                <div>
+                    <h2 class="section-title">Built By</h2>
+                    <div class="profile-card">
+                        <div>
+                            <div class="profile-name">Nishant Tiwari</div>
+                            <div class="profile-role">Software Developer</div>
+                        </div>
+                        <p style="font-size: 0.95rem; color: var(--gray-600); line-height: 1.5;">Traffic Predictor is a software development project focused on combining web development, interactive mapping, data analysis and machine learning into a practical traffic intelligence application.</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="section-title">Project Status</h2>
+                    <div class="feature-card">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span class="status-dot green"></span>
+                            <h3 style="margin: 0;">Active Development</h3>
+                        </div>
+                        <p>Traffic Predictor is an evolving project. New data sources, prediction capabilities, analytics features and performance improvements may be added over time.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Future Roadmap -->
+            <section class="about-section text-block">
+                <h2 class="section-title">Future Roadmap</h2>
+                <p>Planned features and improvements:</p>
+                <ul>
+                    <li>Expanded Bhopal coverage</li>
+                    <li>Improved traffic datasets</li>
+                    <li>More advanced prediction models</li>
+                    <li>Better traffic analytics</li>
+                    <li>Weather-aware traffic prediction</li>
+                    <li>Mobile/PWA improvements</li>
+                </ul>
+            </section>
+
+            <!-- Privacy & Disclaimers -->
+            <section class="about-section grid-2">
+                <div class="privacy-box">
+                    <h4>Privacy</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;">Traffic Predictor may request location access when location-based features are used. Location information should only be used for the functionality required by the application and should not be stored unless the application explicitly provides a disclosed storage feature.</p>
+                    <p style="font-size: 0.95rem; font-weight: 500;">Note: The current application does NOT store precise user location.</p>
+                </div>
+                <div class="disclaimer-box" style="border-color: var(--gray-300); background: var(--gray-50); color: var(--gray-700);">
+                    <h4>Prediction Disclaimer</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.5;">Traffic predictions are estimates based on available data and historical patterns. Actual traffic conditions may vary because of accidents, road closures, construction, weather, public events and other unexpected factors.</p>
+                </div>
+            </section>
+
+            <!-- Final CTA & Feedback -->
+            <section class="about-section about-header" style="margin-bottom: 0;">
+                <h2 class="section-title" style="text-align: center;">Ready to Explore Traffic?</h2>
+                <p class="about-lead">Check your route, explore traffic conditions and understand the journey before you leave.</p>
+                <div class="about-actions" style="margin-bottom: 2rem;">
+                    <a href="index.html" class="btn btn-primary">Open Dashboard</a>
+                    <a href="analytics.html" class="btn" style="background: white; border: 1px solid var(--gray-300); color: var(--gray-800);">Explore Live Traffic</a>
+                </div>
+                <div style="border-top: 1px solid var(--gray-200); padding-top: 2rem; max-width: 600px; margin: 0 auto; text-align: left;">
+                    <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--gray-900); text-align: center;">Have feedback?</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; font-size: 0.95rem; text-align: center;">Found an issue or have an idea for improving Traffic Predictor? Your feedback can help make the application more useful and reliable.</p>
+                    
+                    <form class="standard-form" style="background: white; padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius); box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onsubmit="event.preventDefault(); alert('Thank you for your feedback!'); this.reset();">
+                        <div class="form-group">
+                            <label for="fb-name">Name</label>
+                            <input type="text" id="fb-name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fb-email">Email Address</label>
+                            <input type="email" id="fb-email" placeholder="Your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fb-message">Message</label>
+                            <textarea id="fb-message" rows="4" placeholder="How can we improve?" required style="resize: vertical;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Submit Feedback</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Traffic Predictor</h4>
+                    <p>Advanced traffic monitoring and prediction for the Bhopal region.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="about.html">About System</a></li>
+                        <li><a href="places.html">Places</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Traffic Predictor. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Setup mobile menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const appNav = document.getElementById('app-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        if (menuBtn && appNav) {
+            menuBtn.addEventListener('click', () => {
+                appNav.classList.toggle('menu-open');
+            });
+        }
+        if (navOverlay && appNav) {
+            navOverlay.addEventListener('click', () => {
+                appNav.classList.remove('menu-open');
+            });
+        }
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (appNav) appNav.classList.remove('menu-open');
+            });
+        });
+
+        // Setup Map Preview
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapContainer = document.getElementById('about-map');
+            if (mapContainer) {
+                const map = L.map('about-map', { zoomControl: false, dragging: false, scrollWheelZoom: false }).setView([23.2599, 77.4126], 13);
+                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                    maxZoom: 20,
+                    subdomains:['mt0','mt1','mt2','mt3'],
+                    attribution: '&copy; <a href="https://maps.google.com/">Google Maps</a>',
+                    className: 'map-tiles'
+                }).addTo(map);
+            }
+        });
+    </script>
+</body>
+</html>

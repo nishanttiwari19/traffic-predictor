@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Predictor - Bhopal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <span class="brand-name">Traffic Predictor</span>
+                <span class="brand-location">Bhopal Region</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+            </button>
+            <nav class="app-nav" id="app-nav">
+                <div class="nav-overlay" id="nav-overlay"></div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">Dashboard</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="places.html">Places</a>
+                    <a href="about.html">About</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                
+                <!-- Route Planning Panel -->
+                <section class="panel">
+                    <header class="panel-header">
+                        <h2>Predict Traffic</h2>
+                    </header>
+                    <div class="panel-body">
+                        <form id="prediction-form" class="standard-form">
+                            <div class="form-group relative">
+                                <label for="start-location">Origin</label>
+                                <div class="input-with-button">
+                                    <input type="text" id="start-location" placeholder="e.g. MP Nagar" autocomplete="off" required>
+                                    <button type="button" class="btn-icon" id="btn-use-location" title="Use My Location">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    </button>
+                                </div>
+                                <ul id="start-suggestions" class="autocomplete-list hidden"></ul>
+                            </div>
+                            <div class="form-group relative">
+                                <label for="destination">Destination</label>
+                                <input type="text" id="destination" placeholder="e.g. Lalghati" autocomplete="off" required>
+                                <ul id="dest-suggestions" class="autocomplete-list hidden"></ul>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="date">Date</label>
+                                    <input type="date" id="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="time">Time</label>
+                                    <input type="time" id="time" required>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label for="popular-places">Top Visited Places</label>
+                                <select id="popular-places" class="form-control" style="width: 100%; padding: 8px; border: 1px solid var(--gray-300); border-radius: 4px;" onchange="if(this.value) document.getElementById('destination').value = this.value;">
+                                    <option value="">Select a destination...</option>
+                                    <option value="MP Nagar">MP Nagar</option>
+                                    <option value="New Market">New Market</option>
+                                    <option value="Habibganj">Habibganj</option>
+                                    <option value="Bairagarh">Bairagarh</option>
+                                    <option value="DB City Mall">DB City Mall</option>
+                                    <option value="Van Vihar National Park">Van Vihar National Park</option>
+                                    <option value="AIIMS Bhopal">AIIMS Bhopal</option>
+                                    <option value="Bhopal Junction">Bhopal Junction Railway Station</option>
+                                    <option value="Upper Lake Bhopal">Upper Lake (Bada Talab)</option>
+                                    <option value="Kolar Road">Kolar Road</option>
+                                </select>
+                            </div>
+                            <div class="form-actions" style="margin-top: 0.5rem;">
+                                <button type="submit" class="btn btn-primary">Run Prediction</button>
+                            </div>
+                        </form>
+
+                        <!-- Loading State -->
+                        <div id="loading-state" class="state-message hidden">
+                            <span class="spinner"></span>
+                            <span>Analyzing historical patterns...</span>
+                        </div>
+
+                        <!-- Results -->
+                        <div id="prediction-result" class="result-panel hidden">
+                            <h3>Current Traffic</h3>
+                            <div class="data-grid">
+                                <div class="data-item">
+                                    <span class="label">Traffic Level</span>
+                                    <span class="value" id="res-level"></span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="label">Travel Time</span>
+                                    <span class="value" id="res-time"></span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="label">Est. Delay</span>
+                                    <span class="value" id="res-delay"></span>
+                                </div>
+                            </div>
+                            <p id="res-summary" class="summary-text"></p>
+
+                            <h3 style="margin-top:20px;">PREDICTED TRAFFIC</h3>
+                            <div class="data-grid">
+                                <div class="data-item">
+                                    <span class="label">Traffic Level</span>
+                                    <span class="value" id="ml-level">-</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="label">Traffic Score</span>
+                                    <span class="value" id="ml-score">-</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="label">Prediction Horizon</span>
+                                    <span class="value" id="ml-horizon">Current</span>
+                                </div>
+                            </div>
+                            <p id="ml-summary" class="summary-text" style="font-size: 0.85em; color: var(--gray-500);">Prediction based on historical traffic patterns.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- City Overview Panel -->
+                <section class="panel">
+                    <header class="panel-header">
+                        <h2>City Overview</h2>
+                        <span class="meta-text">Current</span>
+                    </header>
+                    <div class="panel-body">
+                        <ul class="stat-list">
+                            <li>
+                                <span class="stat-label">Overall Status</span>
+                                <span class="stat-value"><span class="status-dot yellow"></span> Moderate</span>
+                            </li>
+                            <li>
+                                <span class="stat-label">Average Speed</span>
+                                <span class="stat-value">24 km/h</span>
+                            </li>
+                            <li>
+                                <span class="stat-label">Active Incidents</span>
+                                <span class="stat-value">3 reported</span>
+                            </li>
+                            <li>
+                                <span class="stat-label">Network Load</span>
+                                <span class="stat-value">64%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="panel" id="about">
+                    <header class="panel-header">
+                        <h2>System Information</h2>
+                    </header>
+                    <div class="panel-body text-content">
+                        <p>Traffic Predictor provides monitoring and congestion forecasting for Bhopal's primary road network.</p>
+                        
+                        <h3 style="margin-top: 1rem; font-size: 0.9rem;">Data Sources</h3>
+                        <ul style="padding-left: 1rem; font-size: 0.85rem; color: var(--gray-500); list-style: disc;">
+                            <li>Map imagery provided by <strong>Google Maps</strong>.</li>
+                            <li>Ward boundary visualization uses the supplied <strong>Bhopal_wards.geojson</strong> dataset.</li>
+                            <li>Geocoding and search powered by <strong>OpenStreetMap Nominatim</strong>.</li>
+                        </ul>
+                    </div>
+                </section>
+
+            </aside>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                
+                <!-- Map Section -->
+                <section class="panel map-panel" id="dashboard">
+                    <header class="panel-header">
+                        <h2>Network Traffic Map</h2>
+                        <span class="meta-text">Last updated: <span id="current-time"></span></span>
+                    </header>
+                    <div class="map-container">
+                        <!-- Interactive Leaflet Map -->
+                        <div id="map" class="network-map" style="z-index: 1;"></div>
+                        
+                        <div class="map-footer">
+                            <div class="legend">
+                                <span class="legend-item"><span class="status-dot green"></span> Low</span>
+                                <span class="legend-item"><span class="status-dot yellow"></span> Moderate</span>
+                                <span class="legend-item"><span class="status-dot orange"></span> High</span>
+                                <span class="legend-item"><span class="status-dot red"></span> Severe</span>
+                            </div>
+                            <div class="map-note">Interactive map visualization via Leaflet.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="bottom-grid">
+                    <!-- Places -->
+                    <section class="panel" id="places">
+                        <header class="panel-header">
+                            <h2>Key Places</h2>
+                            <span class="meta-text">Popular destinations</span>
+                        </header>
+                        <div class="panel-body">
+                            <p style="color: var(--gray-500); font-size: 13px;">Select a place below or use the map to explore locations.</p>
+                            <ul class="stat-list" style="margin-top: 1rem;">
+                                <li>
+                                    <span class="stat-label">MP Nagar</span>
+                                    <button class="btn-text" onclick="document.getElementById('end-location').value='MP Nagar';">Select</button>
+                                </li>
+                                <li>
+                                    <span class="stat-label">New Market</span>
+                                    <button class="btn-text" onclick="document.getElementById('end-location').value='New Market';">Select</button>
+                                </li>
+                                <li>
+                                    <span class="stat-label">Habibganj</span>
+                                    <button class="btn-text" onclick="document.getElementById('end-location').value='Habibganj';">Select</button>
+                                </li>
+                                <li>
+                                    <span class="stat-label">Bairagarh</span>
+                                    <button class="btn-text" onclick="document.getElementById('end-location').value='Bairagarh';">Select</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Route Conditions -->
+                    <section class="panel" id="routes">
+                        <header class="panel-header">
+                            <h2>Key Routes Status</h2>
+                            <button class="btn-text">Refresh Data</button>
+                        </header>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Route Section</th>
+                                            <th>Status</th>
+                                            <th class="text-right">Speed</th>
+                                            <th class="text-right">Trend</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>MP Nagar Zone 1</td>
+                                            <td><span class="status-dot yellow"></span> Moderate</td>
+                                            <td class="text-right">24 km/h</td>
+                                            <td class="text-right">Stable</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Habibganj Underpass</td>
+                                            <td><span class="status-dot orange"></span> High</td>
+                                            <td class="text-right">18 km/h</td>
+                                            <td class="text-right">Decreasing</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lalghati Square</td>
+                                            <td><span class="status-dot green"></span> Low</td>
+                                            <td class="text-right">38 km/h</td>
+                                            <td class="text-right">Stable</td>
+                                        </tr>
+                                        <tr>
+                                            <td>New Market Road</td>
+                                            <td><span class="status-dot red"></span> Severe</td>
+                                            <td class="text-right">12 km/h</td>
+                                            <td class="text-right">Improving</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Traffic Predictor</h4>
+                    <p>Advanced traffic monitoring and prediction for the Bhopal region.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="about.html">About System</a></li>
+                        <li><a href="places.html">Places</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Traffic Predictor. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

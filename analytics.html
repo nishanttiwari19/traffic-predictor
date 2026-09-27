@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Predictor - Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/analytics.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <span class="brand-name">Traffic Predictor</span>
+                <span class="brand-location">Bhopal Region</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+            </button>
+            <nav class="app-nav" id="app-nav">
+                <div class="nav-overlay" id="nav-overlay"></div>
+                <div class="nav-links">
+                    <a href="index.html">Dashboard</a>
+                    <a href="analytics.html" class="active">Analytics</a>
+                    <a href="places.html">Places</a>
+                    <a href="about.html">About</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="app-main" style="display:block; padding: 2rem; overflow-y: auto;">
+            <header class="top-header">
+                <div class="header-titles">
+                    <h2>Traffic Analytics</h2>
+                    <p class="subtitle">Understand traffic patterns, congestion trends and road conditions over time.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="date-filter">
+                        <select id="date-range" class="form-control">
+                            <option value="today">Today</option>
+                            <option value="7" selected>Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="btn-export">Export Report</button>
+                </div>
+            </header>
+
+            <div class="analytics-content">
+                <!-- Inline Error -->
+                <div id="analytics-error" class="state-message error-message hidden" style="margin-bottom:1rem; flex-direction:row; justify-content:space-between; align-items:center;">
+                    <span>Unable to load analytics right now.</span>
+                    <button id="btn-retry" class="btn btn-primary btn-sm" style="padding: 4px 12px; width: auto;">Retry</button>
+                </div>
+                
+                <div id="analytics-loading" class="state-message">
+                    <span class="spinner"></span>
+                    <span>Loading traffic analytics...</span>
+                </div>
+
+                <div id="analytics-empty" class="state-message hidden">
+                    <span>Not enough traffic data available for this period.</span>
+                    <span style="font-size:0.85em; color:var(--gray-500); margin-top:8px;">Try selecting a longer date range.</span>
+                </div>
+
+                <div id="analytics-dashboard" class="hidden">
+                    <div class="demo-badge">Demo Data</div>
+                    <!-- KPI Cards -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <span class="kpi-label">Avg Traffic Score</span>
+                            <span class="kpi-value" id="kpi-score">--</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Peak Traffic Time</span>
+                            <span class="kpi-value" id="kpi-peak">--</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Avg Travel Delay</span>
+                            <span class="kpi-value" id="kpi-delay">--</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Most Congested Road</span>
+                            <span class="kpi-value" id="kpi-congested">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 1 -->
+                    <div class="charts-row">
+                        <div class="card chart-card flex-2">
+                            <div class="card-header">
+                                <h3>Traffic Trend</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="trend-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card chart-card flex-1">
+                            <div class="card-header">
+                                <h3>Typical Traffic by Hour</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="hourly-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 2 -->
+                    <div class="charts-row">
+                        <div class="card chart-card flex-1">
+                            <div class="card-header">
+                                <h3>Traffic by Day</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="daily-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card chart-card flex-1">
+                            <div class="card-header">
+                                <h3>Prediction Accuracy</h3>
+                                <div class="accuracy-metrics">
+                                    <span title="Mean Absolute Error">MAE: <span id="acc-mae">--</span></span>
+                                    <span title="Root Mean Squared Error">RMSE: <span id="acc-rmse">--</span></span>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="accuracy-chart"></canvas>
+                            </div>
+                            <div id="accuracy-msg" class="hidden" style="text-align:center; padding:2rem; font-size:13px; color:var(--gray-500)">
+                                Prediction accuracy will appear when sufficient actual traffic observations are available.
+                            </div>
+                        </div>
+                        <div class="card chart-card flex-1">
+                            <div class="card-header">
+                                <h3>Traffic Distribution</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="distribution-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tables and Hotspots -->
+                    <div class="charts-row">
+                        <div class="card flex-2">
+                            <div class="card-header flex-header">
+                                <h3>Road Performance</h3>
+                                <div class="table-actions" style="display:flex; gap:10px;">
+                                    <select id="road-filter" class="form-control">
+                                        <option value="all">All Roads</option>
+                                    </select>
+                                    <input type="text" id="road-search" class="form-control" placeholder="Search road..." style="width:200px;">
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Road</th>
+                                            <th>Traffic Score</th>
+                                            <th>Avg Speed</th>
+                                            <th>Avg Delay</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="road-table-body">
+                                        <!-- populated by js -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card flex-1">
+                            <div class="card-header">
+                                <h3>Congestion Hotspots</h3>
+                            </div>
+                            <div class="hotspots-list" id="hotspots-list">
+                                <!-- populated by js -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Insights -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Traffic Insights</h3>
+                        </div>
+                        <ul class="insights-list" id="insights-list">
+                            <!-- populated by js -->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Traffic Predictor</h4>
+                    <p>Advanced traffic monitoring and prediction for the Bhopal region.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="about.html">About System</a></li>
+                        <li><a href="places.html">Places</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Traffic Predictor. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="js/analytics.js"></script>
+</body>
+</html>
