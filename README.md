@@ -1,6 +1,22 @@
-# Traffic Predictor
+# Bhopal Traffic Predictor
 
-Traffic Predictor is a modern web application designed to monitor and predict traffic conditions in Bhopal.
+A web application for analyzing routes and predicting traffic conditions in Bhopal.
+
+## 🚀 Live Demo
+
+👉 [Visit Bhopal Traffic Predictor](https://bhopal-traffic-predictor.web.app/)
+
+## 🛠️ Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- Express.js
+- Firebase
+- Firestore
+- Render
+- Traffic Predictor is a modern web application designed to monitor and predict traffic conditions in Bhopal.
 
 ## Architecture
 
